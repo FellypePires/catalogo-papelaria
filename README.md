@@ -17,18 +17,7 @@ Projeto de catálogo de papelaria feito com Spring Boot, PostgreSQL e Angular.
 - Busca por nome e cor: `GET /api/produtos?nome=caneta&cor=azul`.
 - A interface consulta a API; não há lista de produtos fixa no front-end.
 
-## 1. Criar o banco PostgreSQL
-
-Com o PostgreSQL iniciado, abra o pgAdmin, conecte-se ao servidor e abra o Query Tool no banco `postgres`. Execute o comando de `database/criar-banco.sql`. O Spring Data JPA cria as tabelas quando a API iniciar.
-
-Por padrão, a aplicação tenta conectar usando `localhost:5432`, usuário `postgres`, senha `postgres` e banco `catalogo_papelaria`. Se o usuário ou a senha forem diferentes, configure as variáveis antes de iniciar o back-end. No PowerShell:
-
-```powershell
-$env:DB_USER = "postgres"
-$env:DB_PASSWORD = "sua-senha-do-postgres"
-```
-
-## 2. Iniciar o back-end
+## Iniciar o back-end
 
 É necessário ter JDK 21 instalado. O Maven Wrapper está incluído no projeto, então não precisa instalar Maven à parte.
 
@@ -55,7 +44,7 @@ $env:ADMIN_PASSWORD = "escolha-uma-senha"
 
 Usuários comuns podem ser criados na tela de login. O cadastro não permite escolher o perfil de admin.
 
-## 3. Iniciar o front-end
+## Iniciar o front-end
 
 É necessário ter Node.js instalado.
 
