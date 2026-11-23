@@ -1,0 +1,9 @@
+<a class="voltar" routerLink="/categorias">← Voltar às categorias</a>
+<section class="cabecalho-pagina"><p class="sobretitulo">PRODUTOS POR CATEGORIA</p><h1>{{ categoria?.nome || 'Carregando...' }}</h1><p class="descricao-pagina">{{ categoria?.descricao }}</p></section>
+@if (erro) { <div class="mensagem erro">{{ erro }}</div> }
+<section class="lista">
+  @for (produto of produtos; track produto.id) {
+    <a class="produto-linha" [routerLink]="['/produtos', produto.id]"><span class="icone">✎</span><span class="nome">{{ produto.nome }}<small>{{ produto.cor }}</small></span><strong>{{ produto.preco | currency:'BRL' }}</strong></a>
+  }
+  @if (produtos.length === 0 && !erro) { <p class="estado">Essa categoria ainda não tem produtos.</p> }
+</section>

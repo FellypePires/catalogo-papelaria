@@ -1,0 +1,24 @@
+<section class="cabecalho-pagina">
+  <div><p class="sobretitulo">ORGANIZE SUA BUSCA</p><h1>Categorias</h1><p class="descricao-pagina">Escolha uma categoria para ver os produtos relacionados.</p></div>
+</section>
+
+@if (auth.ehAdmin()) {
+  <form class="form-categoria" (ngSubmit)="salvar()">
+    <h2>Nova categoria</h2>
+    <div class="campos"><input name="nome" [(ngModel)]="nome" required placeholder="Nome da categoria" /><input name="descricao" [(ngModel)]="descricao" placeholder="Descrição (opcional)" /><button class="botao primario">Adicionar</button></div>
+  </form>
+}
+
+@if (erro) { <div class="mensagem erro">{{ erro }}</div> }
+@if (aviso) { <div class="mensagem sucesso">{{ aviso }}</div> }
+<section class="lista-categorias">
+  @for (categoria of categorias; track categoria.id) {
+    <article class="categoria-cartao">
+      <span class="icone">▤</span>
+      <div class="texto"><h2>{{ categoria.nome }}</h2><p>{{ categoria.descricao || 'Confira os itens desta categoria.' }}</p></div>
+      <a class="ver-categoria" [routerLink]="['/categorias', categoria.id, 'produtos']">Ver produtos →</a>
+      @if (auth.ehAdmin()) { <button class="excluir" type="button" (click)="excluir(categoria)">Excluir</button> }
+    </article>
+  }
+  @if (categorias.length === 0) { <p class="estado">Ainda não há categorias cadastradas.</p> }
+</section>

@@ -1,0 +1,18 @@
+@if (auth.estaAutenticado()) {
+  <header class="topo">
+    <a class="marca" routerLink="/catalogo"><span class="marca-icone">✎</span> papel & cia</a>
+    <nav>
+      <a routerLink="/catalogo" routerLinkActive="ativo">Produtos</a>
+      <a routerLink="/categorias" routerLinkActive="ativo">Categorias</a>
+    </nav>
+    <div class="conta">
+      <span>{{ auth.email() }}</span>
+      <span class="perfil">{{ auth.ehAdmin() ? 'Admin' : 'Cliente' }}</span>
+      <button class="botao-sair" (click)="sair()">Sair</button>
+    </div>
+  </header>
+}
+
+<main class="conteudo">
+  <router-outlet />
+</main>

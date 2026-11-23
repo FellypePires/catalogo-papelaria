@@ -1,0 +1,15 @@
+# Build e dependências
+/backend/target/
+/frontend/node_modules/
+/frontend/dist/
+/frontend/.angular/
+
+# Configurações locais e segredos
+.env
+.env.*
+!.env.example
+*.log
+
+# Arquivos do sistema
+Thumbs.db
+.DS_Store

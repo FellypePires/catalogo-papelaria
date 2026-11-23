@@ -1,0 +1,23 @@
+.cabecalho-pagina { margin-bottom: 26px; }
+.sobretitulo { color: #bf7144; font-size: .72rem; font-weight: 800; letter-spacing: .14em; margin: 0 0 8px; }
+h1 { color: #244437; font: 700 clamp(2rem, 5vw, 3rem)/1.1 Georgia, serif; margin: 0; }
+.descricao-pagina { color: #737a71; margin: 10px 0 0; }
+.form-categoria { background: #fff; border: 1px solid #e9e5da; border-radius: 13px; padding: 20px; margin-bottom: 20px; }
+.form-categoria h2 { margin: 0 0 14px; color: #315443; font: 700 1.2rem Georgia, serif; }
+.campos { display: flex; gap: 10px; }
+input { flex: 1; min-width: 0; border: 1px solid #d8ded8; border-radius: 8px; padding: 11px 12px; font: inherit; }
+.botao { border: 0; border-radius: 8px; padding: 11px 16px; cursor: pointer; font: inherit; font-weight: 700; }
+.primario { background: #2d5946; color: #fff; }
+.lista-categorias { display: grid; gap: 12px; }
+.categoria-cartao { display: flex; align-items: center; gap: 16px; background: #fff; border: 1px solid #e9e5da; border-radius: 13px; padding: 18px; }
+.icone { display: grid; place-items: center; flex: 0 0 48px; height: 48px; border-radius: 12px; color: #a96742; background: #f4ebe1; font-size: 1.5rem; }
+.texto { flex: 1; }
+.texto h2 { margin: 0 0 5px; color: #294638; font: 700 1.15rem Georgia, serif; }
+.texto p { margin: 0; color: #757b73; font-size: .9rem; }
+.ver-categoria { color: #315c48; text-decoration: none; font-weight: 700; white-space: nowrap; }
+.excluir { border: 0; background: none; color: #a54e3c; cursor: pointer; font: inherit; }
+.mensagem { padding: 11px 13px; border-radius: 8px; margin: 12px 0; }
+.erro { background: #fff0ed; color: #a33e2f; }
+.sucesso { background: #eaf5ec; color: #2d6941; }
+.estado { text-align: center; color: #737a71; padding: 25px; background: #fff; border-radius: 12px; }
+@media (max-width: 700px) { .campos, .categoria-cartao { align-items: stretch; flex-direction: column; } .icone { align-self: start; } }

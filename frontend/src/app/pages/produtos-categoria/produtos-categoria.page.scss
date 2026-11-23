@@ -1,0 +1,14 @@
+.voltar { color: #557261; text-decoration: none; font-weight: 700; }
+.cabecalho-pagina { margin: 28px 0 22px; }
+.sobretitulo { color: #bf7144; font-size: .72rem; font-weight: 800; letter-spacing: .14em; margin: 0 0 8px; }
+h1 { color: #244437; font: 700 clamp(2rem, 5vw, 3rem)/1.1 Georgia, serif; margin: 0; }
+.descricao-pagina { color: #737a71; margin: 10px 0 0; }
+.lista { display: grid; gap: 10px; }
+.produto-linha { display: flex; align-items: center; gap: 14px; padding: 15px; color: #294638; text-decoration: none; background: #fff; border: 1px solid #e9e5da; border-radius: 12px; }
+.icone { display: grid; place-items: center; width: 42px; height: 42px; color: #a96742; background: #f4ebe1; border-radius: 10px; font-size: 1.4rem; }
+.nome { flex: 1; font-weight: 700; }
+small { display: block; margin-top: 4px; color: #82877e; font-weight: 400; }
+strong { color: #315c48; }
+.estado { padding: 25px; text-align: center; color: #737a71; background: #fff; border-radius: 12px; }
+.mensagem { padding: 11px 13px; border-radius: 8px; margin: 12px 0; }
+.erro { background: #fff0ed; color: #a33e2f; }

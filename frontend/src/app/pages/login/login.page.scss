@@ -1,0 +1,24 @@
+.login-pagina { min-height: 72vh; display: grid; grid-template-columns: 1fr 1fr; background: #fff; border-radius: 20px; overflow: hidden; box-shadow: 0 16px 50px #26392b12; }
+.login-cartao { padding: clamp(28px, 6vw, 72px); display: flex; flex-direction: column; justify-content: center; }
+.logo-login { color: #254a3c; text-decoration: none; font-size: 1.3rem; font-weight: 800; }
+.sobretitulo { margin: 44px 0 8px; color: #bf7144; font-size: .72rem; font-weight: 800; letter-spacing: .14em; }
+h1 { margin: 0; color: #244437; font: 700 clamp(1.7rem, 4vw, 2.35rem)/1.15 Georgia, serif; }
+.subtitulo { color: #70776e; margin: 12px 0 25px; }
+form { display: grid; gap: 9px; }
+label { color: #42554b; font-size: .88rem; font-weight: 700; margin-top: 8px; }
+input { border: 1px solid #d8ded8; border-radius: 9px; padding: 13px 14px; font: inherit; outline-color: #658c70; }
+.botao { border: 0; border-radius: 9px; padding: 13px 18px; cursor: pointer; font: inherit; font-weight: 700; }
+.primario { background: #2d5946; color: #fff; }
+.primario:hover { background: #214936; }
+.primario:disabled { opacity: .6; cursor: wait; }
+.largura-total { margin-top: 16px; width: 100%; }
+.link-botao { border: 0; background: transparent; color: #8a5638; font: inherit; font-size: .9rem; cursor: pointer; margin-top: 18px; }
+.mensagem { padding: 11px 13px; border-radius: 8px; margin: 0 0 14px; font-size: .9rem; }
+.erro { background: #fff0ed; color: #a33e2f; }
+.sucesso { background: #eaf5ec; color: #2d6941; }
+.login-lateral { background: #e8efe7; display: flex; flex-direction: column; justify-content: center; padding: 10%; color: #264b3c; background-image: radial-gradient(#bdcdbb 1px, transparent 1px); background-size: 18px 18px; }
+.login-lateral h2, .login-lateral p { background: #e8efe7dd; width: fit-content; }
+.login-lateral h2 { max-width: 360px; font: 700 clamp(2rem, 4vw, 3.4rem)/1.1 Georgia, serif; }
+.login-lateral p { max-width: 300px; color: #5e7164; line-height: 1.6; }
+.desenho { font-size: 4rem; color: #c87647; }
+@media (max-width: 700px) { .login-pagina { grid-template-columns: 1fr; } .login-lateral { display: none; } }

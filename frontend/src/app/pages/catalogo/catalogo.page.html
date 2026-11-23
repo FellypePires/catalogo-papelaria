@@ -1,0 +1,58 @@
+<section class="cabecalho-pagina">
+  <div>
+    <p class="sobretitulo">NOSSA SELEÇÃO</p>
+    <h1>Catálogo de papelaria</h1>
+    <p class="descricao-pagina">Materiais simples para ideias que vão longe.</p>
+  </div>
+  @if (auth.ehAdmin()) {
+    <a class="botao primario" routerLink="/produtos/novo">+ Novo produto</a>
+  }
+</section>
+
+<form class="filtros" (ngSubmit)="buscar()">
+  <div class="campo-filtro">
+    <label for="nome">Nome do produto</label>
+    <input id="nome" name="nome" [(ngModel)]="nome" placeholder="Ex.: caneta" />
+  </div>
+  <div class="campo-filtro">
+    <label for="cor">Cor</label>
+    <input id="cor" name="cor" [(ngModel)]="cor" placeholder="Ex.: azul" />
+  </div>
+  <button class="botao primario" type="submit">Buscar</button>
+  <button class="botao secundario" type="button" (click)="nome = ''; cor = ''; buscar()">Limpar</button>
+</form>
+
+<div class="linha-categoria">
+  <span>Ou veja uma categoria:</span>
+  <select name="categoria" [(ngModel)]="categoriaId" (change)="verCategoria()">
+    <option value="">Todas as categorias</option>
+    @for (categoria of categorias; track categoria.id) {
+      <option [value]="categoria.id">{{ categoria.nome }}</option>
+    }
+  </select>
+</div>
+
+@if (erro) { <div class="mensagem erro">{{ erro }}</div> }
+@if (carregando) { <p class="estado">Carregando produtos...</p> }
+@if (!carregando && produtos.length === 0) { <p class="estado">Nenhum produto encontrado. Tente mudar os filtros.</p> }
+
+<section class="grade-produtos">
+  @for (produto of produtos; track produto.id) {
+    <article class="produto-cartao">
+      <div class="produto-ilustracao">✎</div>
+      <div class="produto-info">
+        <span class="categoria-etiqueta">{{ produto.categoriaNome }}</span>
+        <h2>{{ produto.nome }}</h2>
+        <p class="produto-descricao">{{ produto.descricao || 'Um item escolhido para fazer parte das suas ideias.' }}</p>
+        <div class="produto-detalhes"><span>{{ produto.cor }}</span><strong>{{ produto.preco | currency:'BRL' }}</strong></div>
+        <div class="acoes-produto">
+          <a [routerLink]="['/produtos', produto.id]">Ver detalhes</a>
+          @if (auth.ehAdmin()) {
+            <a [routerLink]="['/produtos', produto.id, 'editar']">Editar</a>
+            <button type="button" (click)="excluir(produto)">Excluir</button>
+          }
+        </div>
+      </div>
+    </article>
+  }
+</section>
