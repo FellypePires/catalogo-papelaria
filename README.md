@@ -19,7 +19,7 @@ Projeto de catálogo de papelaria feito com Spring Boot, PostgreSQL e Angular.
 
 ## Iniciar o back-end
 
-É necessário ter JDK 21 instalado. O Maven Wrapper está incluído no projeto, então não precisa instalar Maven à parte.
+É necessário ter JDK entre as versões 17 e 25. O back-end usa Spring Boot 3.5, compatível com essa faixa. O Maven Wrapper está incluído no projeto, então não precisa instalar Maven à parte.
 
 ```powershell
 cd backend
@@ -46,13 +46,15 @@ Usuários comuns podem ser criados na tela de login. O cadastro não permite esc
 
 ## Iniciar o front-end
 
-É necessário ter Node.js instalado.
+O front-end usa Angular 22. Instale uma versão compatível do Node.js: 22.22.3 ou superior na linha 22, 24.15.0 ou superior na linha 24, ou 26.0.0 ou superior na linha 26. O npm deve ser versão 10 ou superior. As dependências ficam registradas no `package-lock.json` e devem ser instaladas com `npm ci`.
 
 ```powershell
 cd frontend
-npm install
+npm ci
 npm start
 ```
+
+O projeto não precisa de Angular CLI instalado globalmente: o comando `npm start` usa a versão local registrada nas dependências. Para conferir as versões compatíveis com o Angular 22, consulte a [tabela oficial do Angular](https://angular.dev/reference/versions).
 
 Abra `http://localhost:4200`. Entre como admin, cadastre categorias na tela **Categorias** e depois adicione produtos. A API permite consultar e filtrar os dados depois que eles forem cadastrados.
 
