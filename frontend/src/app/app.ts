@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { Router, RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 import { AuthService } from './services/auth.service';
 
@@ -9,7 +9,8 @@ import { AuthService } from './services/auth.service';
   styleUrl: './app.scss'
 })
 export class App {
-  constructor(protected auth: AuthService, private router: Router) {}
+  protected readonly auth = inject(AuthService);
+  private readonly router = inject(Router);
 
   sair(): void {
     this.auth.sair();

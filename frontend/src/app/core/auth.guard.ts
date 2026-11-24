@@ -5,7 +5,7 @@ import { AuthService } from '../services/auth.service';
 export const loginGuard: CanActivateFn = (_rota, estado) => {
   const auth = inject(AuthService);
   const router = inject(Router);
-  return auth.estaAutenticado() ? true : router.createUrlTree(['/login'], { queryParams: { voltar: estado.url } });
+  return auth.estaAutenticado() ? true : router.createUrlTree(['/login'], { queryParams: { returnUrl: estado.url } });
 };
 
 export const adminGuard: CanActivateFn = () => {

@@ -26,18 +26,18 @@
   <span>Ou veja uma categoria:</span>
   <select name="categoria" [(ngModel)]="categoriaId" (change)="verCategoria()">
     <option value="">Todas as categorias</option>
-    @for (categoria of categorias; track categoria.id) {
+    @for (categoria of categorias(); track categoria.id) {
       <option [value]="categoria.id">{{ categoria.nome }}</option>
     }
   </select>
 </div>
 
-@if (erro) { <div class="mensagem erro">{{ erro }}</div> }
-@if (carregando) { <p class="estado">Carregando produtos...</p> }
-@if (!carregando && produtos.length === 0) { <p class="estado">Nenhum produto encontrado. Tente mudar os filtros.</p> }
+@if (erro()) { <div class="mensagem erro">{{ erro() }}</div> }
+@if (carregando()) { <p class="estado">Carregando produtos...</p> }
+@if (!carregando() && produtos().length === 0) { <p class="estado">Nenhum produto encontrado. Tente mudar os filtros.</p> }
 
 <section class="grade-produtos">
-  @for (produto of produtos; track produto.id) {
+  @for (produto of produtos(); track produto.id) {
     <article class="produto-cartao">
       <div class="produto-ilustracao">✎</div>
       <div class="produto-info">

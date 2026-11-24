@@ -1,20 +1,28 @@
-import { computed, Injectable, signal } from '@angular/core';
+import { computed, inject, Injectable, signal } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { tap } from 'rxjs';
 import { LoginResponse, MensagemResponse } from '../models/catalogo.model';
+import { API } from '../core/api.config';
+
+function valorSalvo(chave: string): string | null {
+  const valor = localStorage.getItem(chave);
+  return valor && valor !== 'null' && valor !== 'undefined' ? valor : null;
+}
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
-  private readonly url = 'http://localhost:8080/api/auth';
-  private readonly tokenSalvo = signal(localStorage.getItem('papelaria_token'));
-  private readonly perfilSalvo = signal(localStorage.getItem('papelaria_perfil'));
-  private readonly emailSalvo = signal(localStorage.getItem('papelaria_email') ?? '');
+  private readonly http = inject(HttpClient);
+  private readonly url = `${API}/auth`;
+  private readonly tokenSalvo = signal(valorSalvo('papelaria_token'));
+  private readonly perfilSalvo = signal(valorSalvo('papelaria_perfil'));
+  private readonly emailSalvo = signal(valorSalvo('papelaria_email') ?? '');
 
-  readonly estaAutenticado = computed(() => !!this.tokenSalvo());
+  readonly estaAutenticado = computed(() => {
+    const token = this.tokenSalvo();
+    return token !== null && token !== '' && token !== 'null' && token !== 'undefined';
+  });
   readonly ehAdmin = computed(() => this.perfilSalvo() === 'ADMIN');
   readonly email = computed(() => this.emailSalvo());
-
-  constructor(private http: HttpClient) {}
 
   entrar(email: string, senha: string) {
     return this.http.post<LoginResponse>(`${this.url}/login`, { email, senha }).pipe(

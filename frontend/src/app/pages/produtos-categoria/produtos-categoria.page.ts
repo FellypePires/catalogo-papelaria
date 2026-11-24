@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit, signal } from '@angular/core';
 import { CurrencyPipe } from '@angular/common';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { Categoria, Produto } from '../../models/catalogo.model';
@@ -12,14 +12,15 @@ import { mensagemErro } from '../../core/mensagem-erro';
   styleUrl: './produtos-categoria.page.scss',
 })
 export class ProdutosCategoriaPage implements OnInit {
-  categoria: Categoria | null = null;
-  produtos: Produto[] = [];
-  erro = '';
-  constructor(private catalogo: CatalogoService, private route: ActivatedRoute, private cdr: ChangeDetectorRef) {}
+  private readonly catalogo = inject(CatalogoService);
+  private readonly route = inject(ActivatedRoute);
+  categoria = signal<Categoria | null>(null);
+  produtos = signal<Produto[]>([]);
+  erro = signal('');
 
   ngOnInit(): void {
     const id = Number(this.route.snapshot.paramMap.get('id'));
-    this.catalogo.buscarCategoria(id).subscribe({ next: (categoria) => { this.categoria = categoria; this.cdr.markForCheck(); }, error: (erro) => { this.erro = mensagemErro(erro); this.cdr.markForCheck(); } });
-    this.catalogo.produtosDaCategoria(id).subscribe({ next: (produtos) => { this.produtos = produtos; this.cdr.markForCheck(); }, error: (erro) => { this.erro = mensagemErro(erro); this.cdr.markForCheck(); } });
+    this.catalogo.buscarCategoria(id).subscribe({ next: (categoria) => this.categoria.set(categoria), error: (erro) => this.erro.set(mensagemErro(erro)) });
+    this.catalogo.produtosDaCategoria(id).subscribe({ next: (produtos) => this.produtos.set(produtos), error: (erro) => this.erro.set(mensagemErro(erro)) });
   }
 }

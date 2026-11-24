@@ -9,10 +9,11 @@
   </form>
 }
 
-@if (erro) { <div class="mensagem erro">{{ erro }}</div> }
-@if (aviso) { <div class="mensagem sucesso">{{ aviso }}</div> }
+@if (erro()) { <div class="mensagem erro">{{ erro() }}</div> }
+@if (aviso()) { <div class="mensagem sucesso">{{ aviso() }}</div> }
+@if (carregando()) { <p class="estado">Carregando categorias...</p> }
 <section class="lista-categorias">
-  @for (categoria of categorias; track categoria.id) {
+  @for (categoria of categorias(); track categoria.id) {
     <article class="categoria-cartao">
       <span class="icone">▤</span>
       <div class="texto"><h2>{{ categoria.nome }}</h2><p>{{ categoria.descricao || 'Confira os itens desta categoria.' }}</p></div>
@@ -20,5 +21,5 @@
       @if (auth.ehAdmin()) { <button class="excluir" type="button" (click)="excluir(categoria)">Excluir</button> }
     </article>
   }
-  @if (categorias.length === 0) { <p class="estado">Ainda não há categorias cadastradas.</p> }
+  @if (!carregando() && categorias().length === 0) { <p class="estado">Ainda não há categorias cadastradas.</p> }
 </section>

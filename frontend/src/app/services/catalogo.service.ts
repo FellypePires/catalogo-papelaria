@@ -1,12 +1,12 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Categoria, CategoriaRequest, Produto, ProdutoRequest } from '../models/catalogo.model';
+import { API } from '../core/api.config';
 
 @Injectable({ providedIn: 'root' })
 export class CatalogoService {
-  private readonly url = 'http://localhost:8080/api';
-
-  constructor(private http: HttpClient) {}
+  private readonly http = inject(HttpClient);
+  private readonly url = API;
 
   listarProdutos(nome = '', cor = '') {
     let params = new HttpParams();

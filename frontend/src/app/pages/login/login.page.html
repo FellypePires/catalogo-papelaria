@@ -2,11 +2,11 @@
   <div class="login-cartao">
     <a class="logo-login" href="/login">✎ papel & cia</a>
     <p class="sobretitulo">PAPELARIA COM CARINHO</p>
-    <h1>{{ cadastrar ? 'Crie sua conta' : 'Que bom ter você por aqui' }}</h1>
-    <p class="subtitulo">{{ cadastrar ? 'Seu cadastro terá acesso de usuário.' : 'Entre para conhecer nosso catálogo.' }}</p>
+    <h1>{{ cadastrar() ? 'Crie sua conta' : 'Que bom ter você por aqui' }}</h1>
+    <p class="subtitulo">{{ cadastrar() ? 'Seu cadastro terá acesso de usuário.' : 'Entre para conhecer nosso catálogo.' }}</p>
 
-    @if (erro) { <div class="mensagem erro">{{ erro }}</div> }
-    @if (aviso) { <div class="mensagem sucesso">{{ aviso }}</div> }
+    @if (erro()) { <div class="mensagem erro">{{ erro() }}</div> }
+    @if (aviso()) { <div class="mensagem sucesso">{{ aviso() }}</div> }
 
     <form (ngSubmit)="enviar()">
       <label for="email">E-mail</label>
@@ -15,13 +15,13 @@
       <label for="senha">Senha</label>
       <input id="senha" name="senha" type="password" [(ngModel)]="senha" required autocomplete="current-password" placeholder="Pelo menos 6 caracteres" />
 
-      <button class="botao primario largura-total" [disabled]="carregando">
-        {{ carregando ? 'Aguarde...' : (cadastrar ? 'Criar conta' : 'Entrar no catálogo') }}
+      <button class="botao primario largura-total" [disabled]="carregando()">
+        {{ carregando() ? 'Aguarde...' : (cadastrar() ? 'Criar conta' : 'Entrar no catálogo') }}
       </button>
     </form>
 
-    <button class="link-botao" type="button" (click)="cadastrar = !cadastrar; erro = ''; aviso = ''">
-      {{ cadastrar ? 'Já tenho uma conta' : 'Criar uma conta de usuário' }}
+    <button class="link-botao" type="button" (click)="cadastrar.update(valor => !valor); erro.set(''); aviso.set('')">
+      {{ cadastrar() ? 'Já tenho uma conta' : 'Criar uma conta de usuário' }}
     </button>
   </div>
   <div class="login-lateral">

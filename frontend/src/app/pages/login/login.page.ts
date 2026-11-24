@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
@@ -11,46 +11,45 @@ import { mensagemErro } from '../../core/mensagem-erro';
   styleUrl: './login.page.scss',
 })
 export class LoginPage {
+  private readonly auth = inject(AuthService);
+  private readonly router = inject(Router);
+  private readonly route = inject(ActivatedRoute);
   email = '';
   senha = '';
-  cadastrar = false;
-  carregando = false;
-  erro = '';
-  aviso = '';
-
-  constructor(private auth: AuthService, private router: Router, private route: ActivatedRoute, private cdr: ChangeDetectorRef) {}
+  cadastrar = signal(false);
+  carregando = signal(false);
+  erro = signal('');
+  aviso = signal('');
 
   enviar(): void {
-    this.erro = '';
-    this.aviso = '';
+    this.erro.set('');
+    this.aviso.set('');
     if (!this.email.trim() || !this.senha) {
-      this.erro = 'Preencha o e-mail e a senha.';
+      this.erro.set('Preencha o e-mail e a senha.');
       return;
     }
 
-    this.carregando = true;
-    if (this.cadastrar) {
+    this.carregando.set(true);
+    if (this.cadastrar()) {
       this.auth.cadastrar(this.email, this.senha).subscribe({
         next: (resposta) => {
-          this.carregando = false;
-          this.aviso = resposta.mensagem;
-          this.cadastrar = false;
+          this.carregando.set(false);
+          this.aviso.set(resposta.mensagem);
+          this.cadastrar.set(false);
           this.senha = '';
-          this.cdr.markForCheck();
         },
-        error: (erro) => { this.carregando = false; this.erro = mensagemErro(erro); this.cdr.markForCheck(); },
+        error: (erro) => { this.carregando.set(false); this.erro.set(mensagemErro(erro)); },
       });
       return;
     }
 
     this.auth.entrar(this.email, this.senha).subscribe({
       next: () => {
-        this.carregando = false;
-        const voltar = this.route.snapshot.queryParamMap.get('voltar');
-        this.router.navigateByUrl(voltar || '/catalogo');
-        this.cdr.markForCheck();
+        this.carregando.set(false);
+        const returnUrl = this.route.snapshot.queryParamMap.get('returnUrl');
+        void this.router.navigateByUrl(returnUrl || '/catalogo');
       },
-      error: (erro) => { this.carregando = false; this.erro = mensagemErro(erro); this.cdr.markForCheck(); },
+      error: (erro) => { this.carregando.set(false); this.erro.set(mensagemErro(erro)); },
     });
   }
 }

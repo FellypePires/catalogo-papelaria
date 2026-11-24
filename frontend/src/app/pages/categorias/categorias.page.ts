@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import { Categoria } from '../../models/catalogo.model';
@@ -13,37 +13,39 @@ import { mensagemErro } from '../../core/mensagem-erro';
   styleUrl: './categorias.page.scss',
 })
 export class CategoriasPage implements OnInit {
-  categorias: Categoria[] = [];
+  private readonly catalogo = inject(CatalogoService);
+  protected readonly auth = inject(AuthService);
+  categorias = signal<Categoria[]>([]);
+  carregando = signal(false);
   nome = '';
   descricao = '';
-  erro = '';
-  aviso = '';
-
-  constructor(private catalogo: CatalogoService, protected auth: AuthService, private cdr: ChangeDetectorRef) {}
+  erro = signal('');
+  aviso = signal('');
 
   ngOnInit(): void { this.carregar(); }
 
   carregar(): void {
+    this.carregando.set(true);
     this.catalogo.listarCategorias().subscribe({
-      next: (categorias) => { this.categorias = categorias; this.cdr.markForCheck(); },
-      error: (erro) => { this.erro = mensagemErro(erro); this.cdr.markForCheck(); },
+      next: (categorias) => { this.categorias.set(categorias); this.carregando.set(false); },
+      error: (erro) => { this.erro.set(mensagemErro(erro)); this.carregando.set(false); },
     });
   }
 
   salvar(): void {
-    this.erro = '';
-    if (!this.nome.trim()) { this.erro = 'Informe o nome da categoria.'; return; }
+    this.erro.set('');
+    if (!this.nome.trim()) { this.erro.set('Informe o nome da categoria.'); return; }
     this.catalogo.criarCategoria({ nome: this.nome.trim(), descricao: this.descricao.trim() }).subscribe({
-      next: () => { this.nome = ''; this.descricao = ''; this.aviso = 'Categoria cadastrada.'; this.carregar(); this.cdr.markForCheck(); },
-      error: (erro) => { this.erro = mensagemErro(erro); this.cdr.markForCheck(); },
+      next: () => { this.nome = ''; this.descricao = ''; this.aviso.set('Categoria cadastrada.'); this.carregar(); },
+      error: (erro) => this.erro.set(mensagemErro(erro)),
     });
   }
 
   excluir(categoria: Categoria): void {
     if (!confirm(`Excluir a categoria "${categoria.nome}"?`)) return;
     this.catalogo.excluirCategoria(categoria.id).subscribe({
-      next: () => { this.aviso = 'Categoria excluída.'; this.carregar(); this.cdr.markForCheck(); },
-      error: (erro) => { this.erro = mensagemErro(erro); this.cdr.markForCheck(); },
+      next: () => { this.aviso.set('Categoria excluída.'); this.carregar(); },
+      error: (erro) => this.erro.set(mensagemErro(erro)),
     });
   }
 }

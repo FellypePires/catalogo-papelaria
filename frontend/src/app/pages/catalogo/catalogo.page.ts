@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit, signal } from '@angular/core';
 import { CurrencyPipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RouterLink, Router } from '@angular/router';
@@ -14,30 +14,31 @@ import { mensagemErro } from '../../core/mensagem-erro';
   styleUrl: './catalogo.page.scss',
 })
 export class CatalogoPage implements OnInit {
-  produtos: Produto[] = [];
-  categorias: Categoria[] = [];
+  private readonly catalogo = inject(CatalogoService);
+  protected readonly auth = inject(AuthService);
+  private readonly router = inject(Router);
+  produtos = signal<Produto[]>([]);
+  categorias = signal<Categoria[]>([]);
   nome = '';
   cor = '';
   categoriaId = '';
-  erro = '';
-  carregando = false;
-
-  constructor(private catalogo: CatalogoService, protected auth: AuthService, private router: Router, private cdr: ChangeDetectorRef) {}
+  erro = signal('');
+  carregando = signal(false);
 
   ngOnInit(): void {
     this.catalogo.listarCategorias().subscribe({
-      next: (categorias) => { this.categorias = categorias; this.cdr.markForCheck(); },
-      error: (erro) => { this.erro = mensagemErro(erro); this.cdr.markForCheck(); },
+      next: (categorias) => this.categorias.set(categorias),
+      error: (erro) => this.erro.set(mensagemErro(erro)),
     });
     this.buscar();
   }
 
   buscar(): void {
-    this.erro = '';
-    this.carregando = true;
+    this.erro.set('');
+    this.carregando.set(true);
     this.catalogo.listarProdutos(this.nome, this.cor).subscribe({
-      next: (produtos) => { this.produtos = produtos; this.carregando = false; this.cdr.markForCheck(); },
-      error: (erro) => { this.erro = mensagemErro(erro); this.carregando = false; this.cdr.markForCheck(); },
+      next: (produtos) => { this.produtos.set(produtos); this.carregando.set(false); },
+      error: (erro) => { this.erro.set(mensagemErro(erro)); this.carregando.set(false); },
     });
   }
 
@@ -49,7 +50,7 @@ export class CatalogoPage implements OnInit {
     if (!confirm(`Excluir o produto "${produto.nome}"?`)) return;
     this.catalogo.excluirProduto(produto.id).subscribe({
       next: () => this.buscar(),
-      error: (erro) => { this.erro = mensagemErro(erro); this.cdr.markForCheck(); },
+      error: (erro) => this.erro.set(mensagemErro(erro)),
     });
   }
 }
