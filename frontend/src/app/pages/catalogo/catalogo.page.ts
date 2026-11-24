@@ -11,7 +11,7 @@ import { mensagemErro } from '../../core/mensagem-erro';
   selector: 'app-catalogo-page',
   imports: [FormsModule, RouterLink, CurrencyPipe],
   templateUrl: './catalogo.page.html',
-  styleUrl: './catalogo.page.scss',
+  styleUrl: './catalogo.page.css',
 })
 export class CatalogoPage implements OnInit {
   private readonly catalogo = inject(CatalogoService);

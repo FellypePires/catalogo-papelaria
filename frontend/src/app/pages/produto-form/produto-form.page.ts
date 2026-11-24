@@ -9,7 +9,7 @@ import { mensagemErro } from '../../core/mensagem-erro';
   selector: 'app-produto-form-page',
   imports: [FormsModule, RouterLink],
   templateUrl: './produto-form.page.html',
-  styleUrl: './produto-form.page.scss',
+  styleUrl: './produto-form.page.css',
 })
 export class ProdutoFormPage implements OnInit {
   private readonly catalogo = inject(CatalogoService);

@@ -9,7 +9,7 @@ import { mensagemErro } from '../../core/mensagem-erro';
   selector: 'app-produtos-categoria-page',
   imports: [CurrencyPipe, RouterLink],
   templateUrl: './produtos-categoria.page.html',
-  styleUrl: './produtos-categoria.page.scss',
+  styleUrl: './produtos-categoria.page.css',
 })
 export class ProdutosCategoriaPage implements OnInit {
   private readonly catalogo = inject(CatalogoService);

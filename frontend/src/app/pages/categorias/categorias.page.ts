@@ -10,7 +10,7 @@ import { mensagemErro } from '../../core/mensagem-erro';
   selector: 'app-categorias-page',
   imports: [FormsModule, RouterLink],
   templateUrl: './categorias.page.html',
-  styleUrl: './categorias.page.scss',
+  styleUrl: './categorias.page.css',
 })
 export class CategoriasPage implements OnInit {
   private readonly catalogo = inject(CatalogoService);

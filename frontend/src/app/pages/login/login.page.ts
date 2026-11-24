@@ -8,7 +8,7 @@ import { mensagemErro } from '../../core/mensagem-erro';
   selector: 'app-login-page',
   imports: [FormsModule],
   templateUrl: './login.page.html',
-  styleUrl: './login.page.scss',
+  styleUrl: './login.page.css',
 })
 export class LoginPage {
   private readonly auth = inject(AuthService);
