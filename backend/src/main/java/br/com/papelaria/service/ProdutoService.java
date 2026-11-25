@@ -22,7 +22,17 @@ public class ProdutoService {
     public List<ProdutoResponse> listar(String nome, String cor) {
         String nomeFiltro = vazioParaNulo(nome);
         String corFiltro = vazioParaNulo(cor);
-        return produtos.buscar(nomeFiltro, corFiltro).stream().map(ProdutoResponse::de).toList();
+        List<Produto> resultado;
+        if (nomeFiltro != null && corFiltro != null) {
+            resultado = produtos.findByNomeContainingIgnoreCaseAndCorContainingIgnoreCase(nomeFiltro, corFiltro);
+        } else if (nomeFiltro != null) {
+            resultado = produtos.findByNomeContainingIgnoreCase(nomeFiltro);
+        } else if (corFiltro != null) {
+            resultado = produtos.findByCorContainingIgnoreCase(corFiltro);
+        } else {
+            resultado = produtos.listarTodos();
+        }
+        return resultado.stream().map(ProdutoResponse::de).toList();
     }
 
     public ProdutoResponse buscar(Long id) { return ProdutoResponse.de(encontrar(id)); }
